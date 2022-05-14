@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body  >
+    <h2>Home page</h2><hr>
+    <ol>
+    {% for group in groups %}
+        <li><a href="{{ group.get_absolute_url }}">
+        {{ group.name}}
+            </a>
+        </li>
+    {% endfor%}
+    </ol>
+    <button id="createGroup">Click me to start group chat </button>
+    {% for user in users %}
+    <h1>
+        <img src="{{ user.profile.profile_image.url }}" alt="">
+        <a href="chat/{{user.username}}" id="{{ user.id }}"  onclick="me()">{{ user.username }} </a>
+    </h1><br>
+    {% endfor %}
+</body>
+    
+<script>
+    function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+    }
+
+    const csrftoken = getCookie('csrftoken');
+
+    const groupButton = document.getElementById('createGroup')
+    groupButton.addEventListener('click', async (e) => {
+        const groupName = prompt('Enter name of create')
+        if ( groupName != null ){
+            const url = 'chat/group/create/'+ groupName + '/'
+            await fetch(url,{
+            method : 'POST',
+            headers : {
+                'X-CSRFToken': csrftoken
+            }
+        } )
+        //redirect user to the created group 
+        window.location.replace('http://127.0.0.1:8000/chat/group/'+ groupName + '/')
+        }
+        
+        
+    })
+</script>
+</html>

@@ -1,0 +1,65 @@
+body{
+    background-color: rgba(228, 223, 234, 0.659);
+    margin: 0;
+    padding: 0;
+}
+p, h2{
+    color: #6b6b6b;
+    margin: 0;
+    padding: 0;
+}
+.container{
+    margin: 40px auto;
+    padding: 20px 20px 30px;
+    width: 40%;
+    background-color: rgba(223, 229, 239, 0.376);
+    border: 0.4px solid #6b6b6b;
+    box-shadow: 1px 1px  rgba(27, 84, 175, 0.376) ;
+    border-radius: 20px;
+}
+.intro{
+    text-align: center;
+    margin-bottom: 10px;
+}
+.error{
+    text-align: center;
+    font-size: medium;
+    font-weight: 400;
+    color: red;
+}
+.register-form{
+    width: 100%;
+    box-sizing: border-box;
+    /* margin-top: 20px; */
+    padding: 10px 0;
+}
+.register-form input{
+    width: 90%;
+    height: 45px;
+    font-size: medium;
+    font-weight: 400;
+    outline: none;
+    border: 1px solid #cdbebe;
+    border-radius: 20px;
+    text-indent: 10px;
+    margin: 10px 5% ;
+    box-sizing: border-box;
+}
+.input-val:focus{
+    border: 1px solid rgb(101, 198, 101);
+    box-shadow: 1px 1px rgb(101, 198, 101);
+}
+.register-form .signup{
+    background: rgb(85, 107, 159);
+    color: #fff;
+}
+.question{
+    text-align: center;
+    font-size: large;
+    font-weight: 500;
+
+}
+.question a{
+    text-decoration: none;
+    color: green;
+}

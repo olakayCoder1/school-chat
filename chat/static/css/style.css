@@ -1,0 +1,316 @@
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* background-color: #61DAFB; */
+    /* background-color: #181b5b; focus dark */
+  
+    background-color: rgba(228, 223, 234, 0.659);
+    /* background-color: #DEEBF8; */
+    /* background-color: #2B283A; Dark theme  */
+  }
+  
+  code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+      monospace;
+  }
+  h1,h2,h3,h4,h5,h6,p ,ul{
+    margin: 0;
+  }
+  ul{
+    margin: 0;
+    padding: 0;
+  }
+  h3{
+    font-size: medium;
+    font-weight: 800;
+    line-height: normal;
+  }
+
+
+
+.App{
+    display: flex;
+    max-width: 1040px;
+    margin: 0 auto;
+    height: 100vh;
+    border: 1px solid rgba(228, 223, 234, 0.659);
+}
+
+
+.LeftSide{
+    width: 35%;
+    color: #fff;
+    background-color: rebeccapurple;
+    height: 100%;
+    box-sizing: border-box;
+    position: relative;
+}
+
+
+.Search{
+    width: 100%;
+    height: 10%;
+    box-sizing: border-box;
+    padding: 15px;
+    border-bottom: 1px solid #6b6b6b;
+    background-color: #181b5b;
+}
+.Search input{
+    width: 80%;
+    height: 25px;
+    border-radius: 20px;
+    border: 1px solid rgb(217, 211, 211);
+    outline: none;
+    text-indent: 10px;
+}
+
+
+.user-container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 5px 8px 20px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #6b6b6b;
+    overflow: hidden;
+    padding-right: 20px;
+}
+.users-list .user-container a{
+    text-decoration: none;
+    color: #fff;
+}
+
+.user-container img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.user-container strong{
+    font-size: medium;
+    font-weight: 600;
+}
+.user-container p{
+    overflow: hidden;
+    /* width: 100%; */
+    font-size: medium;
+    font-size: 12px;
+    white-space: nowrap;
+    padding: 0 10px 0 0 ;
+    
+}
+
+
+
+
+.users-list{
+    list-style-type: none;
+    background-color: rebeccapurple;
+    overflow-y: scroll;
+    overscroll-behavior: contain;
+    height:90%;
+    padding-right: 20px;
+
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.users-list::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.users-list {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.users-list-user-about{
+    padding: 10px 20px;
+    border-bottom: 1px solid #242422;
+}
+.users-list .user-container{
+    padding-right: 20px;
+    
+}
+
+.group{
+    display: flex;
+    gap: 10px;
+    padding: 0 10px;
+    background-color: aliceblue;
+    height: 100px;
+    align-items: center;
+    overflow-x: auto;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.group::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.group {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.group .group-item{
+    width: 80px;
+    border: 1px solid #181b5b;
+    background-color: rebeccapurple;
+    border-radius: 10px;
+}
+.group .group-item a{
+    display: flex;
+    flex-direction: column;
+    background-color: green;
+    background-color: rebeccapurple;
+    align-items: center;
+    border-radius: 10px;
+    color: #fff;
+    text-decoration: none;
+    gap: 5px;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+
+
+.Add{
+    position: absolute;
+    bottom: 10px;
+    right: 30px;
+
+    border-radius: 10px;
+    background-color: red;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding: 10px 15px;
+    box-sizing: border-box;
+}
+
+
+
+
+/* nav styling finish  */
+/* nav styling finish  *//* nav styling finish  */
+/* nav styling finish  *//* nav styling finish  *//* nav styling finish  */
+
+
+.Display{
+    width: 65%;
+    position: relative;
+}
+
+.Display .empty{
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    background-color: #fff;
+    align-items: center;
+    text-align: center;
+    object-fit: cover;
+    padding: auto 40px;
+}
+.Display .empty .empty-text{
+    color: #6b6b6b;
+    margin: auto ;
+}
+.ChatLog{
+    height: 80%;
+    overflow-y: scroll;
+    overscroll-behavior: contain;
+    background-color: #fff;
+    scrollbar-width: none;
+
+    padding: 5px 0 ;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.ChatLog::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.ChatLog {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+
+.MessageContainer{
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    
+}
+.MessageContainer img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    
+}
+
+.MessageContainer .message{
+    border: 0.5px solid #6b6b6b;
+    padding: 5px 5px 5px 10px;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+.MessageContainer .message strong{
+    font-size: medium;
+    font-weight: 600;
+    color: #6b6b6b;
+}
+.MessageContainer .message p{
+    font-size: medium;
+    line-height: 20px;
+    font-weight: 400;
+    color: #6b6b6b;
+}
+
+
+.MessageForm{
+    width: 100%;
+    height: 10%;
+    background-color: rgba(228, 223, 234, 0.659);
+    border: 1px solid rgb(232, 225, 225);
+    position: absolute;
+    bottom: 0;
+    padding: 5px 10px;
+    box-sizing: border-box;
+}
+.MessageForm input{
+    width: 90%;
+    height: 40px;
+    text-indent: 10px;
+    float: right;
+    border: 1px solid rgb(232, 225, 225);
+    outline: none;
+
+}
+.MessageForm input:focus{
+    border: 1px solid rgb(101, 198, 101);
+    box-shadow: 1px 1px rgb(101, 198, 101);
+}
+
+.TopDisplay{
+    width: 100%;
+    height: 10%;
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+    box-sizing: border-box;
+    border-bottom: 1px solid rgb(195, 177, 177);
+    background-color: #fff;
+}
+.TopDisplay h3{
+    font-size: medium;
+    font-weight: 600;
+    color: #6b6b6b;
+}

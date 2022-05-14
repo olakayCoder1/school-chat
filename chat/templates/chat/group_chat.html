@@ -1,0 +1,77 @@
+
+{% extends 'chat/general.html' %}
+{% load static %}
+
+{% block title %}{{ friend.username }}{% endblock %}
+   
+    {% block content%}
+    <div class="Display">
+        <div class="TopDisplay">
+            <h3>{{ room_name|upper }}</h3>
+        </div>
+        <div class="ChatLog" id="chat-me">
+            {% if past_messages %}
+            {% for message in past_messages %}
+            <div class='MessageContainer'>
+                <img src="{% static 'images/image-default.png' %}" alt='profile' />
+                <div class='message'>
+                    <strong class=''>{{ message.user_id.username }}</strong>
+                    <p>{{ message }}</p>
+                </div>
+            </div>            
+            {% endfor %}
+            {% endif %}
+            
+            <form class="MessageForm" id="text-form">
+                {% csrf_token%}
+                <input type='text' placeholder="Type meassage" id="direct-message-input" required />
+            </form>
+        </div>
+    </div>
+
+
+
+
+    {{ room_name|json_script:"room-name" }}
+    {{ username|json_script:"username" }}
+    <script>
+        const roomName = JSON.parse(document.getElementById('room-name').textContent);
+        const user = JSON.parse(document.getElementById('username').textContent);
+
+   
+        const chatSocket = new WebSocket(
+            'ws://'
+            + window.location.host
+            + '/chat/group/'
+            + roomName
+            + '/'
+        );
+        chatSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+    	    const child = document.createElement('li')
+            child.innerHTML = (data.user + ' : '+ data.message + ': ' + data.group )
+            let parent = document.getElementById('chat-group');
+            parent.appendChild(child)
+        };
+
+        chatSocket.onclose = function(e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+
+        
+
+        document.getElementById('text-form').onsubmit = function(e) {
+            e.preventDefault()
+            const messageInputDom = document.getElementById('chat-message-input');
+            const message = messageInputDom.value;
+            chatSocket.send(JSON.stringify({
+                'message': message,
+                'user': user
+            }));
+            messageInputDom.value = '';
+        };
+    </script>
+
+{% endblock %}
+</body>
+</html>

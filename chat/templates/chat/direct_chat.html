@@ -1,0 +1,139 @@
+{% extends 'chat/general.html' %}
+{% load static %}
+
+{% block title %}{{ friend.username }}{% endblock %}
+   
+    {% block content%}
+    <div class="Display">
+        <div class="TopDisplay">
+            <h3>{{ friend_name|upper }}</h3>
+        </div>
+        <div class="ChatLog" id="chat-me">
+            {% if past_messages %}
+            {% for message in past_messages %}
+            <div class='MessageContainer'>
+                <img src="{% static 'images/image-default.png' %}" alt='profile' />
+                <div class='message'>
+                    <strong class=''>{{ message.user_id.username }}</strong>
+                    <p>{{ message }}</p>
+                </div>
+            </div>            
+            {% endfor %}
+            {% endif %}
+            
+            <form class="MessageForm" id="form-input">
+                {% csrf_token%}
+                <input type='text' placeholder="Type meassage" id="direct-message-input" required />
+            </form>
+        </div>
+    </div>
+    
+
+
+
+
+
+
+    
+    {{ friend|json_script:"username" }}
+    {{ request.user.username|json_script:"my_username" }}
+    <script>
+        const otherUser = JSON.parse(document.getElementById('username').textContent);
+        const user = JSON.parse(document.getElementById('my_username').textContent);
+        const chatSocket = new WebSocket(
+        'ws://'
+        + window.location.host
+        + '/chat/direct/'
+        + otherUser
+        + '/'
+        );
+
+    chatSocket.onmessage = function(e) {
+    const data = JSON.parse(e.data);
+    console.log(data)
+    const child = document.createElement('div')
+    child.setAttribute('class','MessageContainer')
+    const message = e.data.message
+    const user = e.data.user
+    child.innerHTML =  `
+                <img src="{% static 'images/image-default.png' %}" alt='profile' />
+                <div class='message'>
+                    <strong class=''>${data.user }</strong>
+                    <p>${data.message }</p>
+                </div>
+                `
+    let parent = document.getElementById('chat-me');
+    parent.appendChild(child)
+    console.log(child)
+    console.log(message)
+
+    console.log(user)
+
+    };
+
+    chatSocket.onclose = function(e) {
+    console.error('Chat socket closed unexpectedly');
+    };
+
+    
+
+    document.getElementById('form-input').onsubmit = function(e) {
+        e.preventDefault()
+        const messageInputDom = document.querySelector('#direct-message-input');
+        const message = messageInputDom.value;
+        chatSocket.send(JSON.stringify({
+        'message': message,
+        'user': user
+        
+    }));
+    messageInputDom.value = '';
+    };
+    </script>
+
+
+    {% endblock%}
+
+    
+<!-- 
+    {{ friend|json_script:"username" }}
+    {{ request.user.username|json_script:"my_username" }}
+    <script>
+        const otherUser = JSON.parse(document.getElementById('username').textContent);
+        const user = JSON.parse(document.getElementById('my_username').textContent);
+        const chatSocket = new WebSocket(
+        'ws://'
+        + window.location.host
+        + '/chat/direct/'
+        + otherUser
+        + '/'
+        );
+
+    chatSocket.onmessage = function(e) {
+    const data = JSON.parse(e.data);
+    console.log(data)
+    const child = document.createElement('li')
+    child.innerHTML = (data.user + ' : '+ data.message + ': ' + data.group )
+    let parent = document.getElementById('chat-me');
+    parent.appendChild(child)
+    };
+
+    chatSocket.onclose = function(e) {
+    console.error('Chat socket closed unexpectedly');
+    };
+
+    
+
+    document.getElementById('form-input').onsubmit = function(e) {
+        e.preventDefault()
+        const messageInputDom = document.querySelector('#direct-message-input');
+        const message = messageInputDom.value;
+        chatSocket.send(JSON.stringify({
+        'message': message,
+        'user': user
+        
+    }));
+    messageInputDom.value = '';
+    };
+    </script> -->
+</body>
+</html>

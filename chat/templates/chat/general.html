@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" >
+    
+    <title>{% block title %}Home{% endblock %}</title>
+</head>
+<body>
+    <div class="App">
+        <div class="LeftSide">
+            <div class="topLeft">
+                <form class="Search">
+                    <input type='text' placeholder="Search " />
+                </form>
+            </div>
+            <ul class="users-list">
+
+                <!------ GROUP SECTION START --------------------------->
+                <li class="group">
+                    {% for group in groups %}
+                    <div class="group-item">
+                        <a href="/chat/group/{{group.name}}" id="{{ user.id }}" >
+                            <img src="{% static 'images/image-default.png'%}" alt='profile' width=50/>
+                            <marquee scrolldirection="left">{{ group.name}} </marquee>
+                        </a>
+                    </div>
+                    {% endfor %}
+                    
+                {% for user in users%}
+                <li class='user-container'>
+                    <a href="/chat/{{user.username}}" id="{{ user.id }}"  onclick="me()">
+                        <img src="{% static 'images/image-default.png'%}" alt='profile' width=50/>
+                    </a>
+                    <a href="/chat/{{user.username}}" id="{{ user.id }}"  onclick="me()">
+                        <div>
+                            <strong class="user-username">{{ user.username }}</strong>
+                            <p>Redundant alt attribute. Screen-readers already announc Redundant alt attribute.</p>
+                        </div>
+                    </a>
+                    
+                </li>
+                {% endfor %}
+
+
+                
+            </ul>
+            <div class='Add' id="createGroup" style="cursor: pointer;">
+                <span>Create Group</span>
+            </div>
+        </div>
+
+
+        {%  block content %}
+        <div class="Display">
+            <div class="empty">
+                <h1 class="empty-text">Hello {{ request.user }} start chat</h1>
+            </div>
+        </div>
+        {% endblock%}
+
+
+
+        
+    </div>
+
+        
+<script>
+    function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+    }
+
+    const csrftoken = getCookie('csrftoken');
+
+    const groupButton = document.getElementById('createGroup')
+    groupButton.addEventListener('click', async (e) => {
+        const groupName = prompt('Enter group name ')
+        if ( groupName != null ){
+            const url = 'chat/group/create/'+ groupName + '/'
+            await fetch(url,{
+            method : 'POST',
+            headers : {
+                'X-CSRFToken': csrftoken
+            }
+        } )
+        //redirect user to the created group 
+        window.location.replace('http://127.0.0.1:8000/chat/group/'+ groupName + '/')
+        }
+        
+        
+    })
+</script>
+</body>
+</html>
