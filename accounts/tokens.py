@@ -6,7 +6,7 @@ from .models import TokenActivation
 
 
 def account_activation_token():
-    return secrets.token_hex(32)
+    return secrets.token_urlsafe(32)
 
 User = get_user_model()
 
