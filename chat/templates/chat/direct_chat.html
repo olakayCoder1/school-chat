@@ -10,7 +10,7 @@
         </div>
         <div class="ChatLog" id="chat-me">
             {% if past_messages %}
-            {% for message in past_messages %}
+            {% for message in past_messages reversed %}
             <div class='MessageContainer'>
                 <img src="{% static 'images/image-default.png' %}" alt='profile' />
                 <div class='message'>
@@ -27,14 +27,7 @@
             </form>
         </div>
     </div>
-    
-
-
-
-
-
-
-    
+  
     {{ friend|json_script:"username" }}
     {{ request.user.username|json_script:"my_username" }}
     <script>
@@ -63,7 +56,8 @@
                 </div>
                 `
     let parent = document.getElementById('chat-me');
-    parent.appendChild(child)
+    // parent.appendChild(child)
+    parent.insertBefore(child, parent.firstChild)
     console.log(child)
     console.log(message)
 

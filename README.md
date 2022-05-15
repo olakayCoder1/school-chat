@@ -3,7 +3,12 @@
 
 This project was created to test my understanding of `Websocket` and `django channels`
 
+
+
++ANDROID VIEW IS NOT AVAILABLE
+
 **If notice any bug kindly email me 'programmerolakay@gmail.com'
+
 **Project flow are as follow 
 
 *User Management

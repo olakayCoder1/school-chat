@@ -28,8 +28,8 @@ def testing(requset):
     ['programmerolakay@gmail.com'],
     fail_silently=False,
     )
-
-    return HttpResponse('makiksjbsujhsijsn')
+    alert = 'Mail sent'
+    return render(requset, 'accounts/alert.html' , { 'message': alert })
 
 
 
@@ -50,7 +50,6 @@ def register_page(request):
 #login page view 
 def login_page(request):
     if request.method == 'POST':
-        print(request.POST)
         form = AuthenticationForm(request, request.POST)
         if form.is_valid():
             username = request.POST['username']
@@ -62,8 +61,6 @@ def login_page(request):
                 login(request, user)
                 return redirect('/')
             return HttpResponse('INVALID CREDENTIAL DOES NOT EXIST')
-            # return render(request, 'chat/login-page.html')
-           # return redirect(request.META['HTTP_REFERER'])
         return HttpResponse('FORM IS INVALID')
     messages.info(request,'Invalid login credentials, try again!')
 
@@ -80,24 +77,25 @@ def password_reset(request):
         User = get_user_model()
         confirm_mail = User.objects.filter(email=user_email)
         if confirm_mail.count() > 0 :
+            user = User.objects.get(email=user_email)
+            #getting the current domain 
             current_site = get_current_site(request) 
             token = account_activation_token() 
-            TokenActivation.objects.create(user_id=request.user, token=token)
+            TokenActivation.objects.create(user_id = user, token=token , email=user_email)
             mail_subject = 'Password Reset'  
             message = render_to_string('accounts/password-reset-email.html', {  
                 'user': request.user,  
                 'domain': current_site.domain,  
-                'uid':urlsafe_base64_encode(force_bytes(request.user.id)),  
+                'uid':urlsafe_base64_encode(force_bytes(user.id)),  
                 'token':token,  
             })  
             to_email = user_email  
             email = EmailMessage(  
                         mail_subject, message, to=[to_email]  
             )  
-            email.send() 
-            print(token)
-            print(request.user) 
-            return HttpResponse('Please confirm your email address to complete the registration')  
+            email.send()
+            alert = 'Please check your email to complete the password reset process'
+            return render(request, 'accounts/alert.html' , { 'message': alert })  
     
         return render(request, 'accounts/password-reset.html')
     return render(request, 'accounts/password-reset.html')
@@ -106,29 +104,34 @@ def password_reset(request):
 
 
 def password_reset_confirm(request, uidb64 , token ):
-    User = get_user_model()  
-    try:  
-        uid = force_str(urlsafe_base64_decode(uidb64))  
-        user = User.objects.get(pk=uid)  
-    except(TypeError, ValueError, OverflowError, User.DoesNotExist):  
-        user = None  
-    if user is not None and check_token(user, token): 
-          
-        return redirect('/account/password_reset/done')
-    else:  
-        return HttpResponse('Activation link is invalid!')
-
-    
-def password_reset_update(request):
+    User = get_user_model() 
     if request.method == 'POST':
-        form = SetPasswordForm(request.user, request.POST)
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(id=uid)
+        form = SetPasswordForm(user, request.POST)
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)  # Important!
             messages.success(request, 'Your password was successfully updated!')
-            return redirect('change_password')
+            return redirect('/account/login/')
         else:
             messages.error(request, 'Please correct the error below.')
-    else:
-        form = SetPasswordForm(request.user)
-    return render(request, 'accounts/password-change.html', {'form': form})
+
+    else:     
+        try:  
+            uid = force_str(urlsafe_base64_decode(uidb64))  
+            user = User.objects.get(pk=uid)
+            email = user.email  
+        except(TypeError, ValueError, OverflowError, User.DoesNotExist):  
+            user = None  
+        if user is not None and check_token(user, token , email ): 
+            
+            # return redirect('/account/password_reset/update/')
+            form = SetPasswordForm(user)
+            return render(request, 'accounts/password-change.html', {'form': form})
+        else:
+            alert = 'Activation link is invalid or has been used'  
+            return render(request, 'accounts/alert.html' , { 'message': alert })
+
+
+
