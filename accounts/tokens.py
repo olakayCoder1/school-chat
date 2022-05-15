@@ -1,5 +1,4 @@
-import random
-import string
+import secrets
 from django.contrib.auth import get_user_model
 from .models import TokenActivation
 
@@ -8,11 +7,7 @@ from .models import TokenActivation
 
 
 def account_activation_token():
-    length = 100
-    return''.join(random.choices(string.ascii_uppercase + string.digits + string.ascii_lowercase, k = length ))
-
-
-
+    return secrets.token_urlsafe(32)
 
 User = get_user_model()
 
