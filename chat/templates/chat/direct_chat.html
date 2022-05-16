@@ -20,7 +20,8 @@
             </div>            
             {% endfor %}
             {% endif %}
-            
+        </div>
+        <div>
             <form class="MessageForm" id="form-input">
                 {% csrf_token%}
                 <input type='text' placeholder="Type meassage" id="direct-message-input" required />
@@ -63,12 +64,13 @@
                 </div>
                 `
     let parent = document.getElementById('chat-me');
+    console.log(parent[0])
+
     parent.appendChild(child)
-    console.log(child)
-    console.log(message)
+    parent.scrollTop(parent[0].scrollHeight)
 
     console.log(user)
-
+                
     };
 
     chatSocket.onclose = function(e) {

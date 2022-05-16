@@ -104,9 +104,6 @@ body {
     
 }
 
-
-
-
 .users-list{
     list-style-type: none;
     background-color: rebeccapurple;
@@ -186,14 +183,31 @@ body {
     border-radius: 10px;
     background-color: red;
     display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    align-items: center;
+    text-align: center;
+    padding: 10px 15px;
+    box-sizing: border-box;
+ 
+}
+
+.Settings{
+    position: absolute;
+    bottom:10px;
+    left: 30px;
+    border-radius: 10px; 
+    background-color: red;
+    display: flex;
     align-items: center;
     text-align: center;
     padding: 10px 15px;
     box-sizing: border-box;
 }
-
-
-
+.Settings a{
+    text-decoration: none;
+    color: #fff;
+}
 
 /* nav styling finish  */
 /* nav styling finish  *//* nav styling finish  */

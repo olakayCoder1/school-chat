@@ -17,11 +17,14 @@
                     <input type='text' placeholder="Search " />
                 </form>
             </div>
+           
+        
+
             <ul class="users-list">
 
                 <!------ GROUP SECTION START --------------------------->
                 <li class="group">
-                    {% for group in groups %}
+                    {% for group in groups reversed %}
                     <div class="group-item">
                         <a href="/chat/group/{{group.name}}" id="{{ user.id }}" >
                             <img src="{% static 'images/image-default.png'%}" alt='profile' width=50/>
@@ -29,13 +32,13 @@
                         </a>
                     </div>
                     {% endfor %}
-                    
+                </li> 
                 {% for user in users%}
                 <li class='user-container'>
-                    <a href="/chat/{{user.username}}" id="{{ user.id }}"  onclick="me()">
+                    <a href="/chat/{{user.username}}" id="{{ user.id }}">
                         <img src="{% static 'images/image-default.png'%}" alt='profile' width=50/>
                     </a>
-                    <a href="/chat/{{user.username}}" id="{{ user.id }}"  onclick="me()">
+                    <a href="/chat/{{user.username}}" id="{{ user.id }}" >
                         <div>
                             <strong class="user-username">{{ user.username }}</strong>
                             <p>Redundant alt attribute. Screen-readers already announc Redundant alt attribute.</p>
@@ -48,9 +51,18 @@
 
                 
             </ul>
+            <div class="Settings"  style="cursor: pointer;">
+                <a href="">
+                    <span>Settings</span>
+                </a>
+                
+            </div>
+                
             <div class='Add' id="createGroup" style="cursor: pointer;">
                 <span>Create Group</span>
             </div>
+            
+           
         </div>
 
 
@@ -90,6 +102,7 @@
     const groupButton = document.getElementById('createGroup')
     groupButton.addEventListener('click', async (e) => {
         const groupName = prompt('Enter group name ')
+        console.log(groupName)
         if ( groupName != null ){
             const url = 'chat/group/create/'+ groupName + '/'
             await fetch(url,{

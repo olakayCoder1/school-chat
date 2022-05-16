@@ -9,3 +9,4 @@ Users = get_user_model()
 class TokenActivation(models.Model):
     user_id = models.ForeignKey(Users, on_delete=models.CASCADE)
     token = models.CharField(max_length=150)
+    email = models.EmailField()

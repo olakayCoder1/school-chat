@@ -1,5 +1,4 @@
 from django.forms import ValidationError
-from django.conf import settings
 from chat.models import CustomUser
 from django.contrib.auth.forms import UserCreationForm
 
@@ -21,6 +20,12 @@ class CustomUserCreationForm(UserCreationForm):
         return confirm_password
     
 
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        check_mail = CustomUser.objects.filter(email=email)
+        if check_mail.count() > 0 :
+            raise ValidationError('The email is already in use')
+        return email 
 
     def save(self, commit=True):
         user = super().save(commit=False)

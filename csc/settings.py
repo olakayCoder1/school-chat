@@ -145,9 +145,16 @@ MEDIA_ROOT = os.path.join( BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+
+
 #login redirect url
-LOGIN_RIDIRECT_URL = '/'
 LOGIN_URL = '/account/login/'
+LOGIN_RIDIRECT_URL = '/'
+LOGOUT_URL = '/account/logout/'
+LOGOUT_RIDIRECT_URL = '/account/login/'
+
+
+
 
 AUTH_USER_MODEL = 'chat.CustomUser'
 

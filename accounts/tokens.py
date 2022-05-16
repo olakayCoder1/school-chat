@@ -14,7 +14,7 @@ User = get_user_model()
 
 
 def check_token(user, token , email ):
-    check_token = TokenActivation.objects.filter(user_id=user,token=token)
+    check_token = TokenActivation.objects.filter(user_id=user,token=token , email=email)
     print(check_token)
     if check_token.count() > 0 :
         check_token.delete()
