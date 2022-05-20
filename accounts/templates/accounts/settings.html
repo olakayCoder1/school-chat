@@ -1,12 +1,104 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settings</title>
-</head>
-<body>
-    <h1>Settings page </h1>
-</body>
-</html>
+{% extends 'chat/general.html' %}
+{% load static %}
+
+{% block title %}{{ request.user }} profile{% endblock %}
+   
+{% block content%}
+<div class="Display">
+    <div class="left-side-top-settings">
+        <h3>ACCOUNT</h3>
+        <div class="edit"  style="cursor: pointer;" id="test">
+            <a  href="/account/profile/settings/">
+                <span>Save Changes</span>
+            </a>
+            
+        </div>
+    </div>
+    
+    <div class="left-side-settings">
+        <div class="profile-image">
+            <div>
+                <img src="{% static 'images/image-default.png' %}" alt="profile image" width="500" height="500"/>
+            </div>
+        
+            <form class="Account-detail-form" method="post">
+            {% csrf_token %}
+            {{ form }}
+                <div class="input-container">
+                    <label for="username"><i>**Username</i></label>
+                    <input type="text" name="username" value="olakayCoder1" id="username">
+                </div>
+                <div class="input-container">
+                    <label for="username"><i>**Email</i></label>
+                    <input type="email" name="email" value="olakayCoder1@gmail.com" id="email">
+                </div>
+                <div class="input-container">
+                    <label for="username"><i>**First Name</i></label>
+                    <input type="text" name="first-name" value="olakayCoder1@gmail.com" id="first-name">
+                </div>
+                <div class="input-container">
+                    <label for="username"><i>**Last Name</i></label>
+                    <input type="text" name="last-name" value="olakayCoder1@gmail.com" id="last-name">
+                </div>
+                <!-- <div class="input-container">
+                    <label for="username"><i>**Joined Date</i></label>
+                    <input type="text" name="username" value="20/April/2020" >
+                </div> -->
+                <!-- <div class="group-list">
+                    <p><i>**Group Created</i></p>
+                    <ol>
+                        <li>olakay</li>
+                        <li>olakaj</li>
+                    </ol>
+                </div> -->
+
+                <input type="submit" value="save me">
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+
+    // function getCookie(name) {
+    // let cookieValue = null;
+    // if (document.cookie && document.cookie !== '') {
+    //     const cookies = document.cookie.split(';');
+    //     for (let i = 0; i < cookies.length; i++) {
+    //         const cookie = cookies[i].trim();
+    //         // Does this cookie string begin with the name we want?
+    //         if (cookie.substring(0, name.length + 1) === (name + '=')) {
+    //             cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+    //             break;
+    //         }
+    //     }
+    // }
+    // return cookieValue;
+    // }
+
+    // const csrftoken = getCookie('csrftoken');
+    const testing = document.getElementById('test')
+    testing.addEventListener('click',async ()=>{
+        const username = document.getElementById('username').value
+        const email = document.getElementById('email').value
+        const lastName = document.getElementById('last-name').value
+        const firstName = document.getElementById('first-name').value
+        const data = {
+            username : username,
+            email : email,
+            lastName : lastName,
+            firstName : firstName
+
+        }
+      await fetch('http://127.0.0.1:8000/account/profile/settings/', {
+            method : 'POST',
+            headers : {
+                'X-CSRFToken': csrftoken,
+                'content-Type' : 'application/json'
+            },
+            body : JSON.stringify(data)
+        })
+        alert(data)
+
+    })
+</script>
+{% endblock %}  

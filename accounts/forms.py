@@ -1,7 +1,7 @@
 from django.forms import ValidationError
 from chat.models import CustomUser
 from django.contrib.auth.forms import UserCreationForm
-
+from django import forms
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -36,3 +36,8 @@ class CustomUserCreationForm(UserCreationForm):
                 
 
 
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        # fields = [ 'username', 'email', 'first_name', 'last_name']
+        fields = ['first_name', 'last_name', 'email', 'username']

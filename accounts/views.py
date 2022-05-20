@@ -17,7 +17,9 @@ from .models import TokenActivation
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm , SetPasswordForm
-
+from chat.models import Threads , CustomUser
+import json
+from .forms import CustomUserCreationForm , UserUpdateForm
 
 
 def testing(requset):
@@ -42,7 +44,7 @@ def register_page(request):
             return redirect('/account/login')
         return redirect('/account/register')
     form = CustomUserCreationForm()
-    return render(request, 'accounts/register-page.html', {'form': form})
+    return render(request, 'accounts/register-page.html')
 
 
 
@@ -50,7 +52,6 @@ def register_page(request):
 #login page view 
 def login_page(request):
     if request.method == 'POST':
-        print(request.POST)
         form = AuthenticationForm(request, request.POST)
         if form.is_valid():
             username = request.POST['username']
@@ -132,6 +133,28 @@ def password_reset_confirm_retrieve(request, uidb64 , token ):
             alert = 'Link as already been used or not valid!'
             return  render(request, 'accounts/alert.html', {'message': alert})
 
+@login_required
+def account_profile(request):
+    groups = Threads.objects.filter(thread_type='group')
+    users = CustomUser.objects.all().exclude(id=request.user.id)
+    context = { 'users': users, 'groups': groups}
+    return render(request,'accounts/account-details.html', context)
 
-def account_settings(request, user):
-    return render(request,'accounts/settings.html')
+
+
+
+@login_required
+def account_profile_settings(request):
+    user = request.user
+    if request.method == 'POST':
+        user_to_update =  CustomUser.objects.get(id=user.id)
+        form = UserUpdateForm(instance=user_to_update, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/account/profile/')
+
+    form = UserUpdateForm(instance=user)
+    groups = Threads.objects.filter(thread_type='group')
+    users = CustomUser.objects.all().exclude(id=request.user.id)
+    context = { 'users': users, 'groups': groups , 'form': form}
+    return render(request,'accounts/settings.html', context)

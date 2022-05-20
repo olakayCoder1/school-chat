@@ -1,0 +1,60 @@
+{% extends 'chat/general.html' %}
+{% load static %}
+
+{% block title %}{{ request.user }} profile{% endblock %}
+   
+{% block content%}
+<div class="Display">
+    <div class="left-side-top-settings">
+        <h3>ACCOUNT</h3>
+        <!-- <button><a href="/account/profile/settings/">Edit profile</a></button> -->
+        <div class="edit"  style="cursor: pointer;">
+            <a  href="/account/profile/settings/">
+                <span>Edit profile</span>
+            </a>
+            
+        </div>
+    </div>
+    
+    <div class="left-side-settings">
+        <div class="profile-image">
+            <div>
+                <img src="{% static 'images/image-default.png' %}" alt="profile image" width="500" height="500"/>
+            </div>
+        
+            <form class="Account-detail-form">
+                <div class="input-container">
+                    <label for="username"><i>**Username</i></label>
+                    <input type="text" name="username" value="olakayCoder1"  disabled>
+                </div>
+                <div class="input-container">
+                    <label for="username"><i>**Email</i></label>
+                    <input type="text" name="username" value="olakayCoder1@gmail.com"  disabled>
+                </div>
+                <div class="input-container">
+                    <label for="username"><i>**First Name</i></label>
+                    <input type="text" name="username" value="olakayCoder1@gmail.com"  disabled>
+                </div>
+                <div class="input-container">
+                    <label for="username"><i>**Last Name</i></label>
+                    <input type="text" name="username" value="olakayCoder1@gmail.com"  disabled>
+                </div>
+                <div class="input-container">
+                    <label for="username"><i>**Joined Date</i></label>
+                    <input type="text" name="username" value="20/April/2020" disabled >
+                </div>
+                <!-- <div class="group-list">
+                    <p><i>**Group Created</i></p>
+                    <ol>
+                        <li>olakay</li>
+                        <li>olakaj</li>
+                    </ol>
+                </div> -->
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}  
+
+</body>
+</html>
